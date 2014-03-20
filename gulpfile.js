@@ -1,9 +1,6 @@
-var source = require('vinyl-source-stream'),
-    streamify = require('gulp-streamify'),
-    browserify = require('browserify'),
+var browserify = require('gulp-browserify'),
     nodemon = require('gulp-nodemon'),
     less = require('gulp-less');
-    uglify = require('gulp-uglify'),
 
     gulp = require('gulp');
 
@@ -13,13 +10,19 @@ gulp.task('recess', function () {
 //        .pipe(gulp.dest('./public/css/'));
 });
 
-gulp.task('browserify', function() {
-  var bundleStream = browserify('index.js').bundle();
 
-  bundleStream
-    .pipe(source('index.js'))
-    .pipe(streamify(uglify()))
-    .pipe(gulp.dest('./bundle.js'));
+gulp.task('js', function() {
+    gulp.src('app/app.js')
+        .pipe(browserify({
+//            insertGlobals : true,
+            shim: {
+                jquery: {
+                    path: 'assets/vendor/jquery-1.9.1.min.js',
+                    exports: 'jquery'
+                }
+            }
+        }))
+        .pipe(gulp.dest('public/mergedAssets.js'));
 });
 
 gulp.task('server', function () {
