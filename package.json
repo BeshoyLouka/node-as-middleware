@@ -1,0 +1,18 @@
+{
+  "name": "app",
+  "version": "0.0.1",
+  "description": "node-as-middleware ==================",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/BeshoyLouka/node-as-middleware.git"
+  },
+  "author": "Beshoy Louka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BeshoyLouka/node-as-middleware/issues"
+  }
+}
