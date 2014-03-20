@@ -19,6 +19,7 @@ gulp.task('hbs', function(){
   gulp.src(['app/templates/**/*.hbs'])
     .pipe(handlebars())
     .pipe(defineModule('commonjs'))
+    // should pipe another function here to filter __ templates
     .pipe(concat('compiledTemplates.js'))
     .pipe(gulp.dest('app/templates/'));
 });
