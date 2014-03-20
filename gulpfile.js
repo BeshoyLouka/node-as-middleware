@@ -1,6 +1,10 @@
 var browserify = require('gulp-browserify'),
     nodemon = require('gulp-nodemon'),
-    less = require('gulp-less');
+    less = require('gulp-less'),
+    handlebars = require('gulp-handlebars'),
+    defineModule = require('gulp-define-module'),
+    declare = require('gulp-declare'),
+    concat = require('gulp-concat'),
 
     gulp = require('gulp');
 
@@ -11,14 +15,22 @@ gulp.task('recess', function () {
 });
 
 
+gulp.task('hbs', function(){
+  gulp.src(['app/templates/**/*.hbs'])
+    .pipe(handlebars())
+    .pipe(defineModule('commonjs'))
+    .pipe(concat('compiledTemplates.js'))
+    .pipe(gulp.dest('app/templates/'));
+});
+
 gulp.task('js', function() {
     gulp.src('app/app.js')
         .pipe(browserify({
-//            insertGlobals : true,
+            insertGlobals : true,
             shim: {
                 jquery: {
                     path: 'assets/vendor/jquery-1.9.1.min.js',
-                    exports: 'jquery'
+                    exports: '$'
                 }
             }
         }))
