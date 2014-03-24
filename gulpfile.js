@@ -1,10 +1,14 @@
-var browserify = require('gulp-browserify'),
+var browserify = require('browserify'),
     nodemon = require('gulp-nodemon'),
     less = require('gulp-less'),
     handlebars = require('gulp-handlebars'),
     defineModule = require('gulp-define-module'),
     declare = require('gulp-declare'),
     concat = require('gulp-concat'),
+    shortify = require('shortify'),
+//    source = require('vinyl-source-stream'),
+    uglify = require('gulp-uglify'),
+//    streamify = require('gulp-streamify'),
 
     gulp = require('gulp');
 
@@ -24,8 +28,16 @@ gulp.task('hbs', function(){
     .pipe(gulp.dest('app/templates/'));
 });
 
+
 gulp.task('js', function() {
-    gulp.src('app/app.js')
+
+    var builder = browserify({  entries: './app/app.js'});
+    var transform = shortify({ app: 'app/' });
+
+    builder.transform(transform).bundle().pipe(gulp.dest('public/mergedAssets.js'));
+
+/*
+    gulp.src('./app/app.js')
         .pipe(browserify({
             insertGlobals : true,
             shim: {
@@ -36,8 +48,8 @@ gulp.task('js', function() {
             }
         }))
         .pipe(gulp.dest('public/mergedAssets.js'));
+*/
 });
-
 gulp.task('server', function () {
   nodemon({ script: 'app.js', options: '-e html,js -i main.css' });
 });
