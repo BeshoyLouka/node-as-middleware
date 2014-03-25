@@ -26,7 +26,7 @@ module.exports = function(grunt) {
                 compress: true
             },
             files: {
-                'public/styles.css': [cssDir + 'main.less']
+                'public/styles.css': [cssDir + 'styles.less']
             }
         }
     },
