@@ -91,6 +91,13 @@ module.exports = function(grunt) {
           jquery: {
             path: 'assets/vendor/jquery-1.9.1.min.js',
             exports: '$'
+          },
+          bootstrap: {
+            path: 'assets/vendor/bootstrap.min.js',
+            exports: '$',
+            depends: {
+                'jquery': '$'
+            }
           }
         }
       },
