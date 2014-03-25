@@ -19,14 +19,13 @@ module.exports = function(grunt) {
       }
     },
 */
-    recess: {
-        dist: {
+    less: {
+        development: {
             options: {
-                compile: true,
-                compress: true
+                paths: [cssDir]
             },
             files: {
-                'public/styles.css': [cssDir + 'styles.less']
+                'public/styles.css': cssDir + '/styles.less'
             }
         }
     },
@@ -68,7 +67,7 @@ module.exports = function(grunt) {
       },
       css: {
         files: [cssDir + '/**/*.less', cssDir + '/**/*.css'],
-        tasks: ['recess'],
+        tasks: ['less'],
         options: {
           interrupt: true
         }
@@ -112,7 +111,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   //grunt.loadNpmTasks('grunt-contrib-stylus');
-  grunt.loadNpmTasks('grunt-recess');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('runNode', function () {
@@ -128,7 +127,7 @@ module.exports = function(grunt) {
   });
 
 
-  grunt.registerTask('compile', ['handlebars', 'browserify', 'recess']);
+  grunt.registerTask('compile', ['handlebars', 'browserify', 'less']);
 
   // Run the server and watch for file changes
   grunt.registerTask('server', ['compile', 'runNode', 'watch']);
