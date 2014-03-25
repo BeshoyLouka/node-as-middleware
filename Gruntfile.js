@@ -1,22 +1,33 @@
 var path = require('path');
 
-var stylesheetsDir = 'assets/stylesheets';
+var cssDir = 'assets/css';
 
 module.exports = function(grunt) {
   // Project configuration.
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
-
+/*  TODO: REMOVE WHEN LESS COMPILES SUCCESSFULY
     stylus: {
       compile: {
         options: {
-          paths: [stylesheetsDir],
+          paths: [cssDir],
           'include css': true
         },
         files: {
-          'public/styles.css': stylesheetsDir + '/index.styl'
+          'public/styles.css': cssDir + '/index.styl'
         }
       }
+    },
+*/
+    recess: {
+        dist: {
+            options: {
+                compile: true
+            },
+            files: {
+                'public/styles.css': [cssDir + 'main.less']
+            }
+        }
     },
 
     handlebars: {
@@ -54,9 +65,9 @@ module.exports = function(grunt) {
           interrupt: true
         }
       },
-      stylesheets: {
-        files: [stylesheetsDir + '/**/*.styl', stylesheetsDir + '/**/*.css'],
-        tasks: ['stylus'],
+      css: {
+        files: [cssDir + '/**/*.less', cssDir + '/**/*.css'],
+        tasks: ['recess'],
         options: {
           interrupt: true
         }
@@ -99,7 +110,8 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-contrib-stylus');
+  //grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-recess');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('runNode', function () {
@@ -115,7 +127,7 @@ module.exports = function(grunt) {
   });
 
 
-  grunt.registerTask('compile', ['handlebars', 'browserify', 'stylus']);
+  grunt.registerTask('compile', ['handlebars', 'browserify', 'recess']);
 
   // Run the server and watch for file changes
   grunt.registerTask('server', ['compile', 'runNode', 'watch']);
