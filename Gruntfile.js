@@ -7,16 +7,15 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    stylus: {
-      compile: {
-        options: {
-          paths: [stylesheetsDir],
-          'include css': true
-        },
-        files: {
-          'public/styles.css': stylesheetsDir + '/index.styl'
+    less: {
+        compile: {
+            options: {
+                paths: [stylesheetsDir]
+            },
+            files: {
+                'public/styles.css': stylesheetsDir + '/index.less'
+            }
         }
-      }
     },
 
     handlebars: {
@@ -56,7 +55,7 @@ module.exports = function(grunt) {
       },
       stylesheets: {
         files: [stylesheetsDir + '/**/*.styl', stylesheetsDir + '/**/*.css'],
-        tasks: ['stylus'],
+        tasks: ['less'],
         options: {
           interrupt: true
         }
@@ -99,7 +98,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('runNode', function () {
@@ -115,7 +114,7 @@ module.exports = function(grunt) {
   });
 
 
-  grunt.registerTask('compile', ['handlebars', 'browserify', 'stylus']);
+  grunt.registerTask('compile', ['handlebars', 'browserify', 'less']);
 
   // Run the server and watch for file changes
   grunt.registerTask('server', ['compile', 'runNode', 'watch']);
